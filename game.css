@@ -1,0 +1,246 @@
+/* General body and container styling */
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .background {
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    background: linear-gradient(45deg, #102930, #204778dc, #66a4d2);
+    background-size: 300% 300%;
+    animation: backgroundTransition 10s infinite;
+  }
+  
+  @keyframes backgroundTransition {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  /* Centered game container */
+  .game-container {
+    max-width: 800px;
+    margin: auto;
+    background: linear-gradient(to bottom, #ffffff, #e6f7ff);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    color: #2989bc;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .bins {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+  }
+  
+  .bin {
+    border: 2px dashed #aaa;
+    border-radius: 12px;
+    width: 150px;
+    padding: 15px;
+    text-align: center;
+    transition: border-color 0.3s, transform 0.3s;
+    background: rgba(255, 255, 255, 0.8);
+  }
+  
+  .bin img {
+    width: 100px;
+    height: auto;
+  }
+  
+  .bin:hover {
+    border-color: #4f91a3;
+    transform: scale(1.1);
+  }
+  
+  #waste-container {
+    margin-top: 30px;
+    min-height: 100px;
+  }
+  
+  .waste-item {
+    width: 80px;
+    height: auto;
+    cursor: grab;
+    transition: transform 0.2s ease-in-out, opacity 0.2s;
+  }
+  
+  .waste-item:active {
+    transform: scale(1.2) rotate(-10deg);
+    opacity: 0.8;
+  }
+  
+  .score,
+  .remaining,
+  .timer {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  
+  .timer {
+    color: #ff3333;
+    font-weight: bold;
+  }
+  
+  #feedback {
+    color: red;
+    font-size: 18px;
+    margin-top: 20px;
+  }
+  
+  #start-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    background: linear-gradient(to right, #84fab0, #00c6ff);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  #start-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  #start-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  /* Moving balls styling */
+  .moving-balls {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+  }
+  
+  .ball {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    animation: float 10s linear infinite;
+  }
+  
+  @keyframes float {
+    0% {
+      transform: translate(0, 0);
+    }
+    100% {
+      transform: translate(200px, 800px);
+    }
+  }
+  
+  /* Flying birds */
+  .birds-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+  
+  .bird {
+    position: absolute;
+    width: 100px;
+    animation: fly 15s linear infinite;
+  }
+  
+  .bird1 {
+    top: 10%;
+    left: -150px;
+    animation-delay: 0s;
+  }
+  
+  .bird2 {
+    top: 30%;
+    left: -150px;
+    animation-delay: 5s;
+  }
+  
+  .bird3 {
+    top: 50%;
+    left: -150px;
+    animation-delay: 10s;
+  }
+  
+  @keyframes fly {
+    0% {
+      transform: translateX(-150px) translateY(0) scale(1);
+    }
+    50% {
+      transform: translateX(50vw) translateY(20px) scale(1.2);
+    }
+    100% {
+      transform: translateX(110vw) translateY(-20px) scale(1);
+    }
+  }
+  .game-container {
+    animation: colorChange 8s infinite alternate; /* Added this animation */
+  }
+  
+  @keyframes colorChange {
+    0% {
+      background: linear-gradient(45deg, #ffffff, #e6f7ff);
+    }
+    100% {
+      background: linear-gradient(45deg, #f7ffe6, #d6e6ff);
+    }
+  }
+  
+  /* Added styling for the moving stars */
+  .star-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+  }
+  
+  .star {
+    position: absolute;
+    background: rgba(31, 30, 30, 0.8);
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    animation: moveStars 5s linear infinite;
+  }
+  
+  @keyframes moveStars {
+    0% {
+      transform: translate(0, 0);
+    }
+    100% {
+      transform: translateY(800px);
+    }
+  }

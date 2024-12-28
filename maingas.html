@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gas Pressure & Temperature</title>
+    <link rel="stylesheet" href="maingas.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Gas Pressure & Temperature Data</h1>
+        
+        <div class="data-box">
+            <div class="data-item temperature-box">
+                <h2>Temperature</h2>
+                <p id="temperature">Loading...</p>
+            </div>
+
+            <div class="data-item humidity-box">
+                <h2>Humidity</h2>
+                <p id="humidity">Loading...</p>
+            </div>
+        </div>
+
+        <div class="refresh-status">
+            <p id="status">Waiting for data...</p>
+        </div>
+    </div>
+
+    <script src="maingas.js"></script>
+</body>
+</html>

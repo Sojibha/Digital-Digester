@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Importance of Biogas</title>
+    <link rel="stylesheet" href="style2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Chatbot Section -->
+    <div class="chatbot-toggle" id="chatbot-toggle-1">
+        <i class="fas fa-comments"></i>
+    </div>
+    <div class="chatbot-container" id="chatbot-container-1">
+        <div class="chatbot-header">Biogas Chatbot</div>
+        <div class="chatbot-content" id="chatbot-content-1">
+            <div class="chatbot-message bot">Hello! Ask me anything about biogas or temperature control in biogas plants.</div>
+            <div class="chatbot-questions" id="chatbot-questions-1">
+                <div class="chatbot-question">What is biogas?</div>
+                <div class="chatbot-question">How is biogas produced?</div>
+                <div class="chatbot-question">Why is temperature control important?</div>
+                <div class="chatbot-question">What are the benefits of biogas?</div>
+                <div class="chatbot-question">What temperature range is ideal for biogas production?</div>
+            </div>
+        </div>
+        <div class="chatbot-footer">
+            <input type="text" id="chatbot-input-1" placeholder="Type your message...">
+            <button id="chatbot-send-1"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <!-- Header Section -->
+    <header class="header-section">
+        <div class="logo-contents-container">
+            <div class="logo-container">
+                <img src="DD1.png" alt="Digital Digester Logo">
+            </div>
+            <div class="contents-link" id="contents-toggle">
+                <i class="fas fa-bars"></i> Contents
+            </div>
+        </div>
+        <div class="header-content">
+            <h1>An Introduction to Biogas</h1>
+            <p>Why biogas is crucial and the role of temperature control in biogas plants</p>
+        </div>
+    </header>
+
+    <!-- Additional Header Section -->
+    <header class="header-section additional-header">
+        <div class="language-selector">
+            <i class="fas fa-globe"></i>
+            <span>EN-US</span>
+            <i class="fas fa-caret-down"></i>
+        </div>
+        <div class="profile-container">
+            <div class="profile-icon" id="profile-icon">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="profile-dropdown" id="profile-dropdown">
+                <div class="profile-info">
+                    <p class="user-name">Kazi Habibur</p>
+                    <p class="user-email">20**67@iub.edu.bd</p>
+                </div>
+                <ul class="profile-menu">
+                    <li><a href="about.html">My Account</a></li>
+                    <li><a href="ka3.html">About Project</a></li>
+                    <li><a href="help.html">Help</a></li>
+                    <li><a href="index.html" class="logout">Sign Out</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar Section -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h3>Contents</h3>
+            <button class="close-sidebar" id="close-sidebar">&times;</button>
+        </div>
+        <div class="sidebar-content">
+            <button class="sidebar-button" onclick=window.location.href="ka2.html">Home</button>
+            <button class="sidebar-button" onclick=window.location.href="maingas.html";>Measure Temperature and Pressure Level</button>
+
+            <button class="sidebar-button">Connect Your Bio-Gas</button>
+            <button class="sidebar-button" onclick=window.location.href="package.html">Premium Versions</button>
+
+            <button class="sidebar-button" id="about-us-button">About Us</button>
+            <button class="sidebar-button" id="about-us-button" onclick="location.href='game.html'">Waste Separation Game</button>
+
+        </div>
+    </aside>
+
+    <!-- Content Section -->
+    <section class="content-section">
+        <div class="content-container">
+            <h2>Why is Biogas Important?</h2>
+            <p>
+                Biogas is a renewable energy source produced from the anaerobic digestion of organic materials such as agricultural waste, manure, and municipal waste. It is important for several reasons:
+            </p>
+            <ul>
+                <li>Reduces greenhouse gas emissions by capturing methane.</li>
+                <li>Provides a sustainable energy alternative to fossil fuels.</li>
+                <li>Improves waste management and reduces landfill usage.</li>
+                <li>Produces nutrient-rich digestate as a byproduct for agriculture.</li>
+            </ul>
+        </div>
+
+        <div class="content-container">
+            <h2>Why is Temperature Control Important in Biogas Plants?</h2>
+            <p>
+                Maintaining an optimal temperature is critical for the efficiency and stability of biogas production. The key reasons include:
+            </p>
+            <ul>
+                <li>
+                    <strong>Optimal microbial activity:</strong> Anaerobic digestion relies on specific bacteria, which thrive within a narrow temperature range (typically 35°C-40°C for mesophilic digestion).
+                </li>
+                <li>
+                    <strong>Consistent gas production:</strong> Fluctuations in temperature can inhibit bacterial growth, leading to irregular or reduced biogas output.
+                </li>
+                <li>
+                    <strong>Prevention of process failure:</strong> Extreme temperatures may kill beneficial microbes, causing the entire system to fail.
+                </li>
+            </ul>
+            <p>
+                Efficient insulation and heating systems are essential in biogas plants to maintain these temperatures, especially in colder climates.
+            </p>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+    <script src="script2.js"></script>
+    
+    <script>
+       
+        const chatbotToggle = document.getElementById('chatbot-toggle-1');
+        const chatbotContainer = document.getElementById('chatbot-container-1');
+        const chatbotContent = document.getElementById('chatbot-content-1');
+        const chatbotInput = document.getElementById('chatbot-input-1');
+        const chatbotSend = document.getElementById('chatbot-send-1');
+        const chatbotQuestions = document.getElementById('chatbot-questions-1');
+
+        const responses = {
+            "What is biogas?": "Biogas is a renewable energy source produced through anaerobic digestion of organic matter.",
+            "How is biogas produced?": "Biogas is produced by breaking down organic waste like food scraps and animal manure in the absence of oxygen.",
+            "Why is temperature control important?": "Temperature control ensures optimal microbial activity, leading to consistent and efficient gas production.",
+            "What are the benefits of biogas?": "Biogas reduces greenhouse gas emissions, provides sustainable energy, and helps manage organic waste.",
+            "What temperature range is ideal for biogas production?": "The ideal temperature range for biogas production is 35°C to 40°C for mesophilic bacteria."
+        };
+
+        chatbotToggle.addEventListener('click', () => {
+            chatbotContainer.style.display = chatbotContainer.style.display === 'none' ? 'block' : 'none';
+        });
+
+        chatbotSend.addEventListener('click', () => {
+            handleUserInput(chatbotInput.value.trim());
+        });
+
+        chatbotQuestions.addEventListener('click', (e) => {
+            if (e.target.classList.contains('chatbot-question')) {
+                handleUserInput(e.target.textContent.trim());
+            }
+        });
+
+        function handleUserInput(userInput) {
+            if (userInput) {
+                addMessage(userInput, 'user');
+                chatbotInput.value = '';
+                const botResponse = responses[userInput] || "I'm sorry, I don't have an answer for that.";
+                setTimeout(() => addMessage(botResponse, 'bot'), 500);
+            }
+        }
+
+        function addMessage(message, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chatbot-message ${sender}`;
+            messageDiv.textContent = message;
+            chatbotContent.appendChild(messageDiv);
+            chatbotContent.scrollTop = chatbotContent.scrollHeight;
+        }
+
+        chatbotContainer.style.display = 'none';
+
+        const sidebar = document.getElementById('sidebar');
+        const contentsToggle = document.getElementById('contents-toggle');
+        const closeSidebar = document.getElementById('close-sidebar');
+        const aboutUsButton = document.getElementById('about-us-button');
+
+        // Open sidebar
+        contentsToggle.addEventListener('click', () => {
+            sidebar.style.transform = 'translateX(0)';
+        });
+
+        // Close sidebar
+        closeSidebar.addEventListener('click', () => {
+            sidebar.style.transform = 'translateX(-100%)';
+        });
+
+        // Redirect to About Us page
+        aboutUsButton.addEventListener('click', () => {
+            window.location.href = 'ka1.html';
+        });
+
+        const profileIcon = document.getElementById('profile-icon');
+        const profileDropdown = document.getElementById('profile-dropdown');
+
+        profileIcon.addEventListener('click', () => {
+            profileDropdown.classList.toggle('show');
+        });
+
+        window.addEventListener('click', (e) => {
+            if (!profileIcon.contains(e.target) && !profileDropdown.contains(e.target)) {
+                profileDropdown.classList.remove('show');
+            }
+        });
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Importance of Biogas</title>
+    <link rel="stylesheet" href="style2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Chatbot Styles */
+        .chatbot-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: #3CB043;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            z-index: 1000;
+        }
+
+        .chatbot-container {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 300px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 1000;
+        }
+
+        .chatbot-header {
+            background-color: #3CB043;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .chatbot-content {
+            padding: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .chatbot-message {
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        .chatbot-message.bot {
+            background-color: #e6ffe6;
+        }
+
+        .chatbot-message.user {
+            background-color: #cce5ff;
+            text-align: right;
+        }
+
+        .chatbot-footer {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ddd;
+        }
+
+        .chatbot-footer input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .chatbot-footer button {
+            margin-left: 10px;
+            background-color: #3CB043;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+        }
+
+        .chatbot-questions {
+            margin-bottom: 10px;
+        }
+
+        .chatbot-question {
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 5px 10px;
+            margin: 5px 0;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .chatbot-question:hover {
+            background-color: #e6ffe6;
+        }
+    </style>
+</head>
+<body>
+    <!-- Chatbot -->
+    <div class="chatbot-toggle" id="chatbot-toggle">
+        <i class="fas fa-comments"></i>
+    </div>
+    <div class="chatbot-container" id="chatbot-container">
+        <div class="chatbot-header">
+            Biogas Chatbot
+        </div>
+        <div class="chatbot-content" id="chatbot-content">
+            <div class="chatbot-message bot">Hello! Ask me anything about biogas or temperature control in biogas plants.</div>
+            <div class="chatbot-questions" id="chatbot-questions">
+                <div class="chatbot-question">What is biogas?</div>
+                <div class="chatbot-question">How is biogas produced?</div>
+                <div class="chatbot-question">Why is temperature control important?</div>
+                <div class="chatbot-question">What are the benefits of biogas?</div>
+                <div class="chatbot-question">What temperature range is ideal for biogas production?</div>
+            </div>
+        </div>
+        <div class="chatbot-footer">
+            <input type="text" id="chatbot-input" placeholder="Type your message...">
+            <button id="chatbot-send"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <!-- Header Section -->
+    <header class="header-section">
+        <div class="logo-contents-container">
+            <div class="logo-container">
+                <img src="DD1.png" alt="Digital Digester Logo">
+            </div>
+            <div class="contents-link" id="contents-toggle">
+                <i class="fas fa-bars"></i> Contents
+            </div>
+        </div>
+        <div class="header-content">
+            <h1>An Introduction to Biogas</h1>
+            <p>Why biogas is crucial and the role of temperature control in biogas plants</p>
+        </div>
+    </header>
+
+    <!-- Sidebar Section -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h3>Contents</h3>
+            <button class="close-sidebar" id="close-sidebar">&times;</button>
+        </div>
+        <div class="sidebar-content">
+            <button class="sidebar-button">Measure Temperature and Pressure Level</button>
+            <button class="sidebar-button">Connect Your Biogas</button>
+            <button class="sidebar-button">Premium Versions</button>
+            <button class="sidebar-button" id="about-us-button">About Us</button>
+        </div>
+    </aside>
+
+    <!-- Content Section -->
+    <section class="content-section">
+        <div class="content-container">
+            <h2>Why is Biogas Important?</h2>
+            <p>
+                Biogas is a renewable energy source produced from the anaerobic digestion of organic materials such as agricultural waste, manure, and municipal waste. It is important for several reasons:
+            </p>
+            <ul>
+                <li>Reduces greenhouse gas emissions by capturing methane.</li>
+                <li>Provides a sustainable energy alternative to fossil fuels.</li>
+                <li>Improves waste management and reduces landfill usage.</li>
+                <li>Produces nutrient-rich digestate as a byproduct for agriculture.</li>
+            </ul>
+        </div>
+
+        <div class="content-container">
+            <h2>Why is Temperature Control Important in Biogas Plants?</h2>
+            <p>
+                Maintaining an optimal temperature is critical for the efficiency and stability of biogas production. The key reasons include:
+            </p>
+            <ul>
+                <li><strong>Optimal microbial activity:</strong> Anaerobic digestion relies on specific bacteria, which thrive within a narrow temperature range (typically 35°C-40°C for mesophilic digestion).</li>
+                <li><strong>Consistent gas production:</strong> Fluctuations in temperature can inhibit bacterial growth, leading to irregular or reduced biogas output.</li>
+                <li><strong>Prevention of process failure:</strong> Extreme temperatures may kill beneficial microbes, causing the entire system to fail.</li>
+            </ul>
+            <p>
+                Efficient insulation and heating systems are essential in biogas plants to maintain these temperatures, especially in colder climates.
+            </p>
+        </div>
+    </section>
+
+    <script>
+        const chatbotToggle = document.getElementById('chatbot-toggle');
+        const chatbotContainer = document.getElementById('chatbot-container');
+        const chatbotContent = document.getElementById('chatbot-content');
+        const chatbotInput = document.getElementById('chatbot-input');
+        const chatbotSend = document.getElementById('chatbot-send');
+        const chatbotQuestions = document.getElementById('chatbot-questions');
+
+        const responses = {
+            "What is biogas?": "Biogas is a renewable energy source produced through anaerobic digestion of organic matter.",
+            "How is biogas produced?": "Biogas is produced by breaking down organic waste like food scraps and animal manure in the absence of oxygen.",
+            "Why is temperature control important?": "Temperature control ensures optimal microbial activity, leading to consistent and efficient gas production.",
+            "What are the benefits of biogas?": "Biogas reduces greenhouse gas emissions, provides sustainable energy, and helps manage organic waste.",
+            "What temperature range is ideal for biogas production?": "The ideal temperature range for biogas production is 35°C to 40°C for mesophilic bacteria."
+        };
+
+        chatbotToggle.addEventListener('click', () => {
+            chatbotContainer.style.display = chatbotContainer.style.display === 'none' ? 'block' : 'none';
+        });
+
+        chatbotSend.addEventListener('click', () => {
+            handleUserInput(chatbotInput.value.trim());
+        });
+
+        chatbotQuestions.addEventListener('click', (e) => {
+            if (e.target.classList.contains('chatbot-question')) {
+                handleUserInput(e.target.textContent.trim());
+            }
+        });
+
+        function handleUserInput(userInput) {
+            if (userInput) {
+                addMessage(userInput, 'user');
+                chatbotInput.value = '';
+                const botResponse = responses[userInput] || "I'm sorry, I don't have an answer for that.";
+                setTimeout(() => addMessage(botResponse, 'bot'), 500);
+            }
+        }
+
+        function addMessage(message, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chatbot-message ${sender}`;
+            messageDiv.textContent = message;
+            chatbotContent.appendChild(messageDiv);
+            chatbotContent.scrollTop = chatbotContent.scrollHeight;
+        }
+
+        chatbotContainer.style.display = 'none';
+    </script>
+</body>
+</html>

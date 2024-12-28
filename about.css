@@ -1,0 +1,201 @@
+/* Body and Background Styling */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+  }
+  
+  .background {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    background: linear-gradient(to bottom, #1e3c72, #2a5298);
+  }
+  
+  /* Flying birds */
+  .birds-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+  
+  .bird {
+    position: absolute;
+    width: 100px;
+    animation: fly 15s linear infinite;
+  }
+  
+  .bird1 {
+    top: 10%;
+    left: -150px;
+    animation-delay: 0s;
+  }
+  
+  .bird2 {
+    top: 30%;
+    left: -150px;
+    animation-delay: 5s;
+  }
+  
+  .bird3 {
+    top: 50%;
+    left: -150px;
+    animation-delay: 10s;
+  }
+  
+  @keyframes fly {
+    0% {
+      transform: translateX(-150px) translateY(0) scale(1);
+    }
+    50% {
+      transform: translateX(50vw) translateY(20px) scale(1.2);
+    }
+    100% {
+      transform: translateX(110vw) translateY(-20px) scale(1);
+    }
+  }
+  
+  /* Stars */
+  #stars {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .star {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background-color: white;
+    border-radius: 50%;
+    animation: flyStar 10s linear infinite;
+  }
+  
+  @keyframes flyStar {
+    0% {
+      transform: translateY(0) translateX(0);
+      opacity: 0.8;
+    }
+    100% {
+      transform: translateY(-100vh) translateX(100vw);
+      opacity: 0;
+    }
+  }
+  
+  /* Profile Container */
+  .container {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Mobile responsiveness */
+  @media screen and (max-width: 600px) {
+    .container {
+      margin: 20px;
+      width: 90%;
+    }
+  }
+  
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .edit-profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  /* Photo Upload Section */
+  .photo-upload {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .photo-preview {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    color: #aaa;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  
+  .photo-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  input, select {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  input:focus, select:focus {
+    border-color: #0066cc;
+    outline: none;
+  }
+  
+  .valid-check {
+    color: green;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 5px;
+  }
+  
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .cancel-btn {
+    background-color: #ff6666;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .save-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    opacity: 0.8;
+  }
+  

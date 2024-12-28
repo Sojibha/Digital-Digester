@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Processing</title>
+  <link rel="stylesheet" href="payment.css">
+</head>
+<body>
+  <div class="background">
+    <!-- Water Wave Effect -->
+    <div class="wave wave1"></div>
+    <div class="wave wave2"></div>
+    <div class="wave wave3"></div>
+
+    <!-- Animated Fish -->
+    <div class="fish" onclick="flipElement(this)"></div>
+    <div class="fish fish-two" onclick="flipElement(this)"></div>
+    <div class="fish fish-three" onclick="flipElement(this)"></div>
+    <div class="fish fish-four" onclick="flipElement(this)"></div>
+    <div class="fish fish-five" onclick="flipElement(this)"></div>
+
+    <!-- Animated Birds -->
+    <div class="bird" onclick="flipElement(this)"></div>
+    <div class="bird bird-two" onclick="flipElement(this)"></div>
+    <div class="bird bird-three" onclick="flipElement(this)"></div>
+  </div>
+
+  <h1 class="title">Payment Processing</h1>
+  <div class="container">
+    <form id="paymentForm">
+      <label for="name">Full Name:</label>
+      <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+      
+      <label for="email">Email Address:</label>
+      <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+      
+      <label for="membership">Select Membership Package:</label>
+      <select id="membership" name="membership" required>
+        <option value="" disabled selected>Select a package</option>
+        <option value="Essential">Essential - ৳250 per month</option>
+        <option value="Premiere">Premiere - ৳1110 per month</option>
+        <option value="Enhanced">Enhanced - ৳1250 per month</option>
+      </select>
+
+      <label for="paymentMethod">Payment Method:</label>
+      <select id="paymentMethod" name="paymentMethod" required>
+        <option value="" disabled selected>Select a payment method</option>
+        <option value="Bkash">Bkash</option>
+        <option value="Nagad">Nagad</option>
+      </select>
+
+      <label for="mobileNumber">Mobile Number:</label>
+      <input type="tel" id="mobileNumber" name="mobileNumber" placeholder="Enter your mobile number" required maxlength="11">
+      
+      <label for="txid">Transaction ID (TXID):</label>
+      <input type="text" id="txid" name="txid" placeholder="Enter your TXID" required>
+
+      <button type="submit" id="submitBtn">Pay Now</button>
+    </form>
+  </div>
+  <div class="footer">
+    <p>Need help? <a href="ka1.html" onclick="handleSupportClick()">Contact Support</a></p>
+
+  </div>
+
+  <script src="payment.js"></script>
+</body>
+</html>

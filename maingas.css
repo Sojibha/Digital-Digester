@@ -1,0 +1,81 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7fa;
+    color: #333;
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #4a90e2;
+}
+
+.data-box {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.data-item {
+    background-color: #e6f1f9;
+    padding: 20px;
+    border-radius: 8px;
+    width: 45%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.data-item h2 {
+    font-size: 1.5em;
+    color: #333;
+}
+
+.data-item p {
+    font-size: 2em;
+    color: #4a90e2;
+    font-weight: bold;
+}
+
+.refresh-status {
+    font-size: 1.2em;
+    color: #6c757d;
+    margin-top: 20px;
+}
+
+.refresh-status p {
+    font-size: 1.2em;
+    color: #28a745;
+}
+
+.refresh-status p.error {
+    color: #dc3545;
+}
+/* Smooth transition for background color changes */
+.data-box .data-item {
+    transition: background-color 0.5s ease-in-out;
+}
+
+/* Temperature increase effect */
+.temperature-box.increase {
+    background-color: rgba(255, 0, 0, 0.3); /* Red transition for temperature increase */
+}
+
+/* Humidity increase effect */
+.humidity-box.increase {
+    background-color: rgba(255, 255, 0, 0.3); /* Yellow transition for humidity increase */
+}
