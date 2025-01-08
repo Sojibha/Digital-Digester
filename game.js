@@ -94,7 +94,7 @@ createStars();
 function startGame() {
   score = 0;
   remainingItems = 20;
-  timer = 15;
+  timer = 20;
 
   document.getElementById("score").textContent = score;
   document.getElementById("remaining").textContent = remainingItems;
@@ -105,7 +105,7 @@ function startGame() {
   document.getElementById("start-btn").disabled = true;
 
   timerInterval = setInterval(() => {
-    if (timer <= 4) {
+    if (timer <= 6) {
       tickSound.playbackRate = 2.0;
     } else {
       tickSound.playbackRate = 1.0;
