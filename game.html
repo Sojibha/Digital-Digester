@@ -1,52 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Waste Sorting Game</title>
-  <link rel="stylesheet" href="game.css">
+  <link rel="stylesheet" href="gaming.css" />
 </head>
 <body>
   <div class="background">
     <!-- Flying birds -->
     <div class="birds-container">
-      <img src="birds.gif" alt="Bird" class="bird bird1">
-      <img src="birds.gif" alt="Bird" class="bird bird2">
-      <img src="birds.gif" alt="Bird" class="bird bird3">
+      <img src="birds.gif" alt="Bird" class="bird bird1" />
+      <img src="birds.gif" alt="Bird" class="bird bird2" />
+      <img src="birds.gif" alt="Bird" class="bird bird3" />
     </div>
 
     <!-- Game container -->
     <div class="game-container">
-      <div class="star-overlay"></div> <!-- Moving stars overlay -->
+      <div class="star-overlay"></div>
       <h1>Waste Sorting Game 🗑️</h1>
-      <p>Put the waste into the correct dustbin!</p>
+      <p>Put the waste into the correct dustbin</p>
       <p class="score">Score: <span id="score">0</span></p>
-      <p class="remaining">Remaining Items: <span id="remaining">10</span></p>
-      <p class="timer">Time Left: <span id="timer">20</span> seconds</p>
+      <p class="remaining">Remaining Items: <span id="remaining">20</span></p>
+      <p class="timer">Time Left: <span id="timer">10</span> seconds</p>
 
       <button id="start-btn" onclick="startGame()">Start Game</button>
 
       <div class="bins">
-        <div id="food-bin" class="bin" ondrop="drop(event)" ondragover="allowDrop(event)">
-          <img src="dustorganic.png" alt="Food Waste">
+        <!-- Instead of drag/drop, we now have click handlers -->
+        <div id="food-bin" class="bin" onclick="handleBinClick('food-bin')">
+          <img src="dustorganic.png" alt="Food Waste" />
           <p>Food Waste</p>
         </div>
-        <div id="plastic-bin" class="bin" ondrop="drop(event)" ondragover="allowDrop(event)">
-          <img src="dustplastic.png" alt="Plastic Waste">
+        <div id="plastic-bin" class="bin" onclick="handleBinClick('plastic-bin')">
+          <img src="dustplastic.png" alt="Plastic Waste" />
           <p>Plastic Waste</p>
         </div>
-        <div id="paper-bin" class="bin" ondrop="drop(event)" ondragover="allowDrop(event)">
-          <img src="dustpaper.png" alt="Paper Waste">
+        <div id="paper-bin" class="bin" onclick="handleBinClick('paper-bin')">
+          <img src="dustpaper.png" alt="Paper Waste" />
           <p>Paper Waste</p>
         </div>
       </div>
-
+      <h2>IoT Based Wastemanagement and Bio-Gas Production</h2>
+      <!-- Container to display the current waste item -->
       <div id="waste-container"></div>
       <p id="feedback"></p>
     </div>
     <div class="moving-balls"></div>
   </div>
 
-  <script src="game.js"></script>
+  <script src="gaming.js"></script>
 </body>
 </html>
