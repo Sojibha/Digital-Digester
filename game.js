@@ -143,6 +143,42 @@ function endGame() {
     location.reload();
   }, 500);
 }
+// Toggle to track the current glow color (yellow = true, red = false)
+let isYellowGlow = true;
+
+function spawnWasteItem() {
+  const wasteContainer = document.getElementById("waste-container");
+  wasteContainer.innerHTML = "";
+
+  // Pick a random item
+  const randomIndex = Math.floor(Math.random() * wasteItems.length);
+  currentWasteItem = wasteItems[randomIndex];
+
+  // Create and show the item
+  const img = document.createElement("img");
+  img.id = currentWasteItem.id;
+  img.src = currentWasteItem.src;
+  img.alt = currentWasteItem.id;
+  img.className = "waste-item"; // Start with base class
+
+  // Apply alternating glow class based on toggle
+  if (isYellowGlow) {
+    img.classList.add("glow-yellow");
+  } else {
+    img.classList.add("glow-red");
+  }
+
+  // Append to container
+  wasteContainer.appendChild(img);
+
+  // Toggle the glow color for the next waste item
+  isYellowGlow = !isYellowGlow;
+
+  // Remove the glow class after 0.5 seconds
+  setTimeout(() => {
+    img.classList.remove("glow-yellow", "glow-red");
+  }, 500);
+}
 
 // Moving balls generator
 function createMovingBalls() {
