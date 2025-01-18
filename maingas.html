@@ -1,32 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gas Pressure & Temperature</title>
-    <link rel="stylesheet" href="maingas.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Digital Digester</title>
+  <link rel="stylesheet" href="maingas.css" />
 </head>
 <body>
-    <div class="container">
-        <h1>Gas Pressure & Temperature Data</h1>
-        
-        <div class="data-box">
-            <div class="data-item temperature-box">
-                <h2>Temperature</h2>
-                <p id="temperature">Loading...</p>
-            </div>
-
-            <div class="data-item humidity-box">
-                <h2>Humidity</h2>
-                <p id="humidity">Loading...</p>
-            </div>
-        </div>
-
-        <div class="refresh-status">
-            <p id="status">Waiting for data...</p>
-        </div>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">
+      <img src="DD1.png" alt="Logo" />
+      <span>Digital Digester</span>
     </div>
+    <div class="nav-links">
+      <a href="#">Solutions</a>
+      <a href="#">Pricing</a>
+      <a href="#">About</a>
+    </div>
+    <button class="back-btn">
+      Back <span>→</span>
+    </button>
+  </nav>
 
-    <script src="maingas.js"></script>
+  <!-- Hero Section -->
+  <div class="hero">
+    <h1>Flexible Solutions for Digester</h1>
+    <div class="form-section">
+      <div class="data-display" id="temperature-display">Temperature: -- °C</div>
+      <div class="data-display" id="humidity-display">Humidity: -- %</div>
+      <div class="data-display" id="pressure-display">Pressure: -- PPM</div>
+    </div>
+    
+    <!-- Charts -->
+    <div class="chart-container">
+      <div class="chart-title">Temperature Over Time</div>
+      <canvas id="temperature-chart"></canvas>
+    </div>
+    <div class="chart-container">
+      <div class="chart-title">Humidity Over Time</div>
+      <canvas id="humidity-chart"></canvas>
+    </div>
+    <div class="chart-container">
+      <div class="chart-title">Pressure Over Time</div>
+      <canvas id="pressure-chart"></canvas>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="tempt.js"></script>
 </body>
 </html>
