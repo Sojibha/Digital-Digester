@@ -1,83 +1,163 @@
-// Replace these values with your actual ThingSpeak Channel ID and Read API Key
-const CHANNEL_ID = "2795575"; // Your ThingSpeak Channel ID (remove < >)
-const READ_API_KEY = "9MZM5ODHVPO3BWRE"; // Your ThingSpeak Read API Key (remove < >)
+document.addEventListener("DOMContentLoaded", function () {
+  const temperatureDisplay = document.getElementById("temperature-display");
+  const humidityDisplay = document.getElementById("humidity-display");
+  const pressureDisplay = document.getElementById("pressure-display");
 
-// Define the API endpoint for fetching data from ThingSpeak
-const THINGSPEAK_API_URL = `https://api.thingspeak.com/channels/${CHANNEL_ID}/feeds.json?api_key=${READ_API_KEY}&results=1`;
+  // Initialize chart instances
+  const temperatureCtx = document.getElementById("temperature-chart").getContext("2d");
+  const humidityCtx = document.getElementById("humidity-chart").getContext("2d");
+  const pressureCtx = document.getElementById("pressure-chart").getContext("2d");
 
-// Variables to store previous temperature and humidity values
-let previousTemperature = null;
-let previousHumidity = null;
+  const temperatureChart = new Chart(temperatureCtx, {
+    type: "line",
+    data: {
+      labels: [],
+      datasets: [{
+        label: "Temperature (°C)",
+        data: [],
+        borderColor: "red",
+        borderWidth: 2,
+        fill: false,
+      }],
+    },
+    options: {
+      responsive: true,
+      scales: {
+        x: { title: { display: true, text: "Time", color: "#fff" }},
+        y: { title: { display: true, text: "Temperature (°C)", color: "#fff" }}
+      }
+    }
+  });
 
-// Function to fetch data from ThingSpeak
-async function fetchData() {
-    try {
-        console.log("Fetching data from ThingSpeak...");
-        const response = await fetch(THINGSPEAK_API_URL);
-        if (!response.ok) {
-            throw new Error(`Failed to fetch data: ${response.statusText}`);
+  const humidityChart = new Chart(humidityCtx, {
+    type: "line",
+    data: {
+      labels: [],
+      datasets: [{
+        label: "Humidity (%)",
+        data: [],
+        borderColor: "yellow",
+        borderWidth: 2,
+        fill: false,
+      }],
+    },
+    options: {
+      responsive: true,
+      scales: {
+        x: { title: { display: true, text: "Time", color: "#fff" }},
+        y: { title: { display: true, text: "Humidity (%)", color: "#fff" }}
+      }
+    }
+  });
+
+  const pressureChart = new Chart(pressureCtx, {
+    type: "line",
+    data: {
+      labels: [],
+      datasets: [{
+        label: "Pressure (PPM)",
+        data: [],
+        borderColor: "green",
+        borderWidth: 2,
+        fill: false,
+      }],
+    },
+    options: {
+      responsive: true,
+      scales: {
+        x: { title: { display: true, text: "Time", color: "#fff" }},
+        y: { title: { display: true, text: "Pressure (PPM)", color: "#fff" }}
+      }
+    }
+  });
+
+  // Data history for each parameter
+  let dataHistory = {
+    time: [],
+    temperature: [],
+    humidity: [],
+    pressure: [],
+  };
+
+  function showNotification(message) {
+    // Create a notification element
+    const notification = document.createElement("div");
+    notification.textContent = message;
+    notification.style.position = "fixed";
+    notification.style.bottom = "20px";
+    notification.style.right = "20px";
+    notification.style.padding = "15px 20px";
+    notification.style.backgroundColor = "#ff4c4c";
+    notification.style.color = "#fff";
+    notification.style.borderRadius = "5px";
+    notification.style.fontWeight = "bold";
+    notification.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.1)";
+    notification.style.zIndex = "1000";
+    
+    document.body.appendChild(notification);
+
+    // Remove the notification after 5 seconds
+    setTimeout(() => {
+      notification.remove();
+    }, 5000);
+  }
+
+  function fetchData() {
+    fetch("http://192.168.0.114")
+      .then((response) => {
+        if (!response.ok) throw new Error("Network response was not ok");
+        return response.json();
+      })
+      .then((data) => {
+        const now = new Date();
+        const timeLabel = `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
+
+        // Update displays
+        temperatureDisplay.textContent = `Temperature: ${data.temperature.toFixed(2)} °C`;
+        humidityDisplay.textContent = `Humidity: ${data.humidity.toFixed(2)} %`;
+        pressureDisplay.textContent = `Pressure: ${data.pressure.toFixed(2)} PPM`;
+
+        // Check temperature thresholds and show notifications
+        if (data.temperature > 40) {
+          showNotification("Temperature is too high! (Above 40°C). Please use a cooler to bring it to 30-40°C.");
+        } else if (data.temperature < 30) {
+          showNotification("Temperature is too low! (Below 30°C). Please use a heater to bring it to 30-40°C.");
         }
-        const data = await response.json();
-        console.log("Fetched data successfully:", data); // Debugging log
-        updateUI(data);
-    } catch (error) {
-        console.error("Error fetching data:", error);
-        updateStatus("Error fetching data", true);
-    }
-}
 
-// Function to update the displayed values on the page
-function updateUI(data) {
-    const temperatureElement = document.getElementById('temperature');
-    const humidityElement = document.getElementById('humidity');
-    const temperatureBox = document.querySelector('.temperature-box');
-    const humidityBox = document.querySelector('.humidity-box');
+        // Update data history
+        dataHistory.time.push(timeLabel);
+        dataHistory.temperature.push(data.temperature);
+        dataHistory.humidity.push(data.humidity);
+        dataHistory.pressure.push(data.pressure);
 
-    // Ensure data exists
-    if (!data.feeds || data.feeds.length === 0) {
-        console.error("No data found in ThingSpeak response.");
-        updateStatus("No data available", true);
-        return;
-    }
+        // Limit data to 30-minute window
+        const maxEntries = 180; // 30 minutes, assuming updates every 10 seconds
+        if (dataHistory.time.length > maxEntries) {
+          dataHistory.time.shift();
+          dataHistory.temperature.shift();
+          dataHistory.humidity.shift();
+          dataHistory.pressure.shift();
+        }
 
-    // Extract the latest data from ThingSpeak
-    const latestData = data.feeds[0];  // Get the most recent data entry
-    const temperature = parseFloat(latestData.field1);  // Assuming temperature is stored in field1
-    const humidity = parseFloat(latestData.field2);  // Assuming humidity is stored in field2
+        // Update each chart
+        temperatureChart.data.labels = dataHistory.time;
+        temperatureChart.data.datasets[0].data = dataHistory.temperature;
+        temperatureChart.update();
 
-    // Update the temperature and humidity on the page
-    temperatureElement.textContent = temperature ? `${temperature} °C` : "N/A";
-    humidityElement.textContent = humidity ? `${humidity} %` : "N/A";
+        humidityChart.data.labels = dataHistory.time;
+        humidityChart.data.datasets[0].data = dataHistory.humidity;
+        humidityChart.update();
 
-    // Check if temperature increased
-    if (previousTemperature !== null && temperature > previousTemperature) {
-        temperatureBox.classList.add('increase');
-        setTimeout(() => temperatureBox.classList.remove('increase'), 10000); // Reset color after 1 second
-    }
+        pressureChart.data.labels = dataHistory.time;
+        pressureChart.data.datasets[0].data = dataHistory.pressure;
+        pressureChart.update();
+      })
+      .catch((error) => {
+        console.error("Unable to get data:", error.message);
+      });
+  }
 
-    // Check if humidity increased
-    if (previousHumidity !== null && humidity > previousHumidity) {
-        humidityBox.classList.add('increase');
-        setTimeout(() => humidityBox.classList.remove('increase'), 10000); // Reset color after 1 second
-    }
-
-    // Update previous values
-    previousTemperature = temperature;
-    previousHumidity = humidity;
-
-    // Update the status message
-    updateStatus("Data updated successfully!", false);
-}
-
-// Function to update the status message
-function updateStatus(message, isError = false) {
-    const statusElement = document.getElementById('status');
-    statusElement.textContent = message;
-    statusElement.classList.toggle('error', isError);
-}
-
-// Fetch data every 5 seconds
-setInterval(fetchData, 5000); // Adjust interval as needed
-
-// Initial data fetch
-fetchData();
+  // Fetch data every 10 seconds
+  setInterval(fetchData, 10000);
+  fetchData(); // Initial fetch
+});
