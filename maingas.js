@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
     data: {
       labels: [],
       datasets: [{
-        label: "Pressure (PPM)",
+        label: "Pressure (kPa)",
         data: [],
         borderColor: "green",
         borderWidth: 2,
@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
       responsive: true,
       scales: {
         x: { title: { display: true, text: "Time", color: "#fff" }},
-        y: { title: { display: true, text: "Pressure (PPM)", color: "#fff" }}
+        y: { title: { display: true, text: "Pressure (kPa)", color: "#fff" }}
       }
     }
   });
@@ -80,7 +80,6 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   function showNotification(message) {
-    // Create a notification element
     const notification = document.createElement("div");
     notification.textContent = message;
     notification.style.position = "fixed";
@@ -93,45 +92,52 @@ document.addEventListener("DOMContentLoaded", function () {
     notification.style.fontWeight = "bold";
     notification.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.1)";
     notification.style.zIndex = "1000";
-    
+
     document.body.appendChild(notification);
 
-    // Remove the notification after 5 seconds
     setTimeout(() => {
       notification.remove();
     }, 5000);
   }
 
-  function fetchData() {
-    fetch("http://192.168.0.114")
-      .then((response) => {
-        if (!response.ok) throw new Error("Network response was not ok");
-        return response.json();
-      })
-      .then((data) => {
-        const now = new Date();
+  async function fetchData() {
+    const channelID = "2812999"; // Replace with your ThingSpeak channel ID
+    const readAPIKey = "UGC13Z4WE14XTA80"; // Replace with your ThingSpeak read API key
+    const url = `https://api.thingspeak.com/channels/${channelID}/feeds.json?api_key=${readAPIKey}&results=1`;
+
+    try {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error("Network response was not ok");
+      const data = await response.json();
+
+      if (data.feeds.length > 0) {
+        const latestFeed = data.feeds[0];
+        const now = new Date(latestFeed.created_at);
         const timeLabel = `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
 
+        const temperature = parseFloat(latestFeed.field1);
+        const humidity = parseFloat(latestFeed.field2);
+        const pressure = parseFloat(latestFeed.field3);
+
         // Update displays
-        temperatureDisplay.textContent = `Temperature: ${data.temperature.toFixed(2)} °C`;
-        humidityDisplay.textContent = `Humidity: ${data.humidity.toFixed(2)} %`;
-        pressureDisplay.textContent = `Pressure: ${data.pressure.toFixed(2)} PPM`;
+        temperatureDisplay.textContent = `Temperature: ${temperature.toFixed(2)} °C`;
+        humidityDisplay.textContent = `Humidity: ${humidity.toFixed(2)} %`;
+        pressureDisplay.textContent = `Pressure: ${pressure.toFixed(2)} kPa`;
 
         // Check temperature thresholds and show notifications
-        if (data.temperature > 40) {
+        if (temperature > 40) {
           showNotification("Temperature is too high! (Above 40°C). Please use a cooler to bring it to 30-40°C.");
-        } else if (data.temperature < 30) {
+        } else if (temperature < 30) {
           showNotification("Temperature is too low! (Below 30°C). Please use a heater to bring it to 30-40°C.");
         }
 
         // Update data history
         dataHistory.time.push(timeLabel);
-        dataHistory.temperature.push(data.temperature);
-        dataHistory.humidity.push(data.humidity);
-        dataHistory.pressure.push(data.pressure);
+        dataHistory.temperature.push(temperature);
+        dataHistory.humidity.push(humidity);
+        dataHistory.pressure.push(pressure);
 
-        // Limit data to 30-minute window
-        const maxEntries = 180; // 30 minutes, assuming updates every 10 seconds
+        const maxEntries = 180;
         if (dataHistory.time.length > maxEntries) {
           dataHistory.time.shift();
           dataHistory.temperature.shift();
@@ -139,7 +145,7 @@ document.addEventListener("DOMContentLoaded", function () {
           dataHistory.pressure.shift();
         }
 
-        // Update each chart
+        // Update charts
         temperatureChart.data.labels = dataHistory.time;
         temperatureChart.data.datasets[0].data = dataHistory.temperature;
         temperatureChart.update();
@@ -151,10 +157,10 @@ document.addEventListener("DOMContentLoaded", function () {
         pressureChart.data.labels = dataHistory.time;
         pressureChart.data.datasets[0].data = dataHistory.pressure;
         pressureChart.update();
-      })
-      .catch((error) => {
-        console.error("Unable to get data:", error.message);
-      });
+      }
+    } catch (error) {
+      console.error("Unable to fetch data:", error.message);
+    }
   }
 
   // Fetch data every 10 seconds
