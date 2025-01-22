@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Update displays
         temperatureDisplay.textContent = `Temperature: ${temperature.toFixed(2)} °C`;
         humidityDisplay.textContent = `Humidity: ${humidity.toFixed(2)} %`;
-        pressureDisplay.textContent = `Pressure: ${pressure.toFixed(2)} kPa`;
+        pressureDisplay.textContent = `Pressure: ${pressure.toFixed(2)} Pa`;
 
         // Check temperature thresholds and show notifications
         if (temperature > 40) {
