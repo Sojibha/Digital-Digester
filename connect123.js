@@ -24,7 +24,7 @@ form.addEventListener('submit', function (e) {
 
   const arduinoCode = `
 
- WiFi.begin("${ssid}", "${password}");
+ 
  #include <WiFi.h>
 #include <LiquidCrystal_I2C.h>
 #include "DHTesp.h"
