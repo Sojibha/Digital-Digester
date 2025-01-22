@@ -7,7 +7,19 @@ body {
     color: #333;
     line-height: 1.6;
 }
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
+    background-color: #f0f0f0; /* Optional: Adds a background color */
+}
+
+h2 {
+    font-family: Arial, sans-serif;
+    font-size: 2rem;
+    color: #333; /* Optional: Adjust text color */
+}
 /* Glow effect for text */
 .glow {
     background-color: rgba(255, 255, 0, 0.2);
