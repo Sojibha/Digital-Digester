@@ -2,11 +2,15 @@ document.addEventListener("DOMContentLoaded", function () {
   const temperatureDisplay = document.getElementById("temperature-display");
   const humidityDisplay = document.getElementById("humidity-display");
   const pressureDisplay = document.getElementById("pressure-display");
+  const tankAvailabilityDisplay = document.getElementById("tank-availability-display");
+  const biodigesterTemperatureDisplay = document.getElementById("temperature-biodigester-display");
 
   // Initialize chart instances
   const temperatureCtx = document.getElementById("temperature-chart").getContext("2d");
   const humidityCtx = document.getElementById("humidity-chart").getContext("2d");
   const pressureCtx = document.getElementById("pressure-chart").getContext("2d");
+  const tankAvailabilityCtx = document.getElementById("tank-availability-chart").getContext("2d");
+  const biodigesterTemperatureCtx = document.getElementById("biodigester-temperature-chart").getContext("2d");
 
   const temperatureChart = new Chart(temperatureCtx, {
     type: "line",
@@ -71,12 +75,56 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+  const tankAvailabilityChart = new Chart(tankAvailabilityCtx, {
+    type: "line",
+    data: {
+      labels: [],
+      datasets: [{
+        label: "Tank Availability (%)",
+        data: [],
+        borderColor: "blue",
+        borderWidth: 2,
+        fill: false,
+      }],
+    },
+    options: {
+      responsive: true,
+      scales: {
+        x: { title: { display: true, text: "Time", color: "#fff" }},
+        y: { title: { display: true, text: "Tank Availability (%)", color: "#fff" }}
+      }
+    }
+  });
+
+  const biodigesterTemperatureChart = new Chart(biodigesterTemperatureCtx, {
+    type: "line",
+    data: {
+      labels: [],
+      datasets: [{
+        label: "Biodigester Temperature (°C)",
+        data: [],
+        borderColor: "purple",
+        borderWidth: 2,
+        fill: false,
+      }],
+    },
+    options: {
+      responsive: true,
+      scales: {
+        x: { title: { display: true, text: "Time", color: "#fff" }},
+        y: { title: { display: true, text: "Biodigester Temperature (°C)", color: "#fff" }}
+      }
+    }
+  });
+
   // Data history for each parameter
   let dataHistory = {
     time: [],
     temperature: [],
     humidity: [],
     pressure: [],
+    tankAvailability: [],
+    biodigesterTemperature: [],
   };
 
   function showNotification(message) {
@@ -118,32 +166,32 @@ document.addEventListener("DOMContentLoaded", function () {
         const temperature = parseFloat(latestFeed.field1);
         const humidity = parseFloat(latestFeed.field2);
         const pressure = parseFloat(latestFeed.field3);
+        const tankAvailability = parseFloat(latestFeed.field5);
+        const biodigesterTemperature = parseFloat(latestFeed.field4);
 
         // Update displays
         temperatureDisplay.textContent = `Temperature: ${temperature.toFixed(2)} °C`;
         humidityDisplay.textContent = `Humidity: ${humidity.toFixed(2)} %`;
-        pressureDisplay.textContent = `Pressure: ${pressure.toFixed(2)} Pa`;
+        pressureDisplay.textContent = `Pressure: ${pressure.toFixed(2)} kPa`;
+        tankAvailabilityDisplay.textContent = `Tank Availability: ${tankAvailability.toFixed(2)} %`;
+        biodigesterTemperatureDisplay.textContent = `Temperature in Bio Digester: ${biodigesterTemperature.toFixed(2)} °C`;
 
-        // Check temperature thresholds and show notifications
-        if (temperature > 40) {
-          showNotification("Temperature is too high! (Above 40°C). Please use a cooler to bring it to 30-40°C.");
-        } else if (temperature < 30) {
-          showNotification("Temperature is too low! (Below 30°C). Please use a heater to bring it to 30-40°C.");
-        }
-
-        // Update data history
-        dataHistory.time.push(timeLabel);
-        dataHistory.temperature.push(temperature);
-        dataHistory.humidity.push(humidity);
-        dataHistory.pressure.push(pressure);
-
-        const maxEntries = 180;
-        if (dataHistory.time.length > maxEntries) {
+        // Update chart data
+        if (dataHistory.time.length >= 10) {
           dataHistory.time.shift();
           dataHistory.temperature.shift();
           dataHistory.humidity.shift();
           dataHistory.pressure.shift();
+          dataHistory.tankAvailability.shift();
+          dataHistory.biodigesterTemperature.shift();
         }
+
+        dataHistory.time.push(timeLabel);
+        dataHistory.temperature.push(temperature);
+        dataHistory.humidity.push(humidity);
+        dataHistory.pressure.push(pressure);
+        dataHistory.tankAvailability.push(tankAvailability);
+        dataHistory.biodigesterTemperature.push(biodigesterTemperature);
 
         // Update charts
         temperatureChart.data.labels = dataHistory.time;
@@ -157,13 +205,21 @@ document.addEventListener("DOMContentLoaded", function () {
         pressureChart.data.labels = dataHistory.time;
         pressureChart.data.datasets[0].data = dataHistory.pressure;
         pressureChart.update();
+
+        tankAvailabilityChart.data.labels = dataHistory.time;
+        tankAvailabilityChart.data.datasets[0].data = dataHistory.tankAvailability;
+        tankAvailabilityChart.update();
+
+        biodigesterTemperatureChart.data.labels = dataHistory.time;
+        biodigesterTemperatureChart.data.datasets[0].data = dataHistory.biodigesterTemperature;
+        biodigesterTemperatureChart.update();
+
       }
     } catch (error) {
-      console.error("Unable to fetch data:", error.message);
+      console.error("Error fetching data:", error);
+      showNotification("Error fetching data. Please check your internet connection.");
     }
   }
 
-  // Fetch data every 10 seconds
-  setInterval(fetchData, 10000);
-  fetchData(); // Initial fetch
+  setInterval(fetchData, 15000); // Fetch data every 15 seconds
 });
